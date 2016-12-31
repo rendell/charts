@@ -1,0 +1,204 @@
+---
+title: "Aruba Key Indicators"
+date: "April 16, 2016"
+output:
+  html_document: default
+  pdf_document:
+    fig_height: 3.5
+    fig_width: 5
+  word_document: default
+---
+
+
+
+A collection of relevant economic indicators, updated monthly. 
+
+***
+
+## Monthly Indicators  
+```{r, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
+#Packages
+library(scales)
+library(ggplot2)
+library(ggthemes) 
+library(gridExtra)
+library(dygraphs)
+library(xts)
+library(RColorBrewer)
+
+#Load data
+monthly=read.csv("monthly.csv")
+quarterly=read.csv("quarterly.csv")
+yearly=read.csv("yearly.csv")
+
+#Plotting
+Stay_2013<- ts(monthly$Stay_2013, start=c(1),end=c(12), frequency=1)
+Stay_2013<- as.xts(Stay_2013)
+Stay_2014<- ts(monthly$Stay_2014, start=c(1),end=c(12), frequency=1)
+Stay_2014<- as.xts(Stay_2014)
+Stay_2015<- ts(monthly$Stay_2015, start=c(1),end=c(12), frequency=1)
+Stay_2015<- as.xts(Stay_2015)
+Stay_2016<- ts(monthly$Stay_2016, start=c(1),end=c(12), frequency=1)
+Stay_2016<- as.xts(Stay_2016)
+stay_month <- cbind(Stay_2013, Stay_2014, Stay_2015, Stay_2016)
+plot1.1 <- dygraph(stay_month, main="Chart 1.1: Stay-over visitors")%>%
+  dyOptions(colors=RColorBrewer::brewer.pal(3,"Set2")) %>%
+  dyAxis("y", label = "Visitors in Thousands")%>%
+  dySeries("..1", label = "2013") %>%
+  dySeries("..2", label = "2014") %>%
+  dySeries("..3", label = "2015") %>%
+  dySeries("..4", label = "2016") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE)%>%
+   dyAxis("x", label = "Month")
+
+Nights_2013<- ts(monthly$Nights_2013, start=c(1),end=c(12), frequency=1)
+Nights_2013<- as.xts(Nights_2013)
+Nights_2014<- ts(monthly$Nights_2014, start=c(1),end=c(12), frequency=1)
+Nights_2014<- as.xts(Nights_2014)
+Nights_2015<- ts(monthly$Nights_2015, start=c(1),end=c(12), frequency=1)
+Nights_2015<- as.xts(Nights_2015)
+Nights_2016<- ts(monthly$Nights_2016, start=c(1),end=c(12), frequency=1)
+Nights_2016<- as.xts(Nights_2016)
+Nights_month <- cbind(Nights_2013, Nights_2014, Nights_2015, Nights_2016)
+plot1.2 <- dygraph(Nights_month, main="Chart 1.2: Visitor nights")%>%
+  dyOptions(colors=RColorBrewer::brewer.pal(3,"Set2")) %>%
+  dyAxis("y", label = "Visitors in Thousands")%>%
+  dySeries("..1", label = "2013") %>%
+  dySeries("..2", label = "2014") %>%
+  dySeries("..3", label = "2015") %>%
+  dySeries("..4", label = "2016") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE)%>%
+   dyAxis("x", label = "Month")
+
+Cruise_2013<- ts(monthly$Cruise_2013, start=c(1),end=c(12), frequency=1)
+Cruise_2013<- as.xts(Cruise_2013)
+Cruise_2014<- ts(monthly$Cruise_2014, start=c(1),end=c(12), frequency=1)
+Cruise_2014<- as.xts(Cruise_2014)
+Cruise_2015<- ts(monthly$Cruise_2015, start=c(1),end=c(12), frequency=1)
+Cruise_2015<- as.xts(Cruise_2015)
+Cruise_2016<- ts(monthly$Cruise_2016, start=c(1),end=c(12), frequency=1)
+Cruise_2016<- as.xts(Cruise_2016)
+Cruise_month <- cbind(Cruise_2013, Cruise_2014, Cruise_2015, Cruise_2016)
+plot1.3 <- dygraph(Cruise_month, main="Chart 1.3: Cruise Visitors")%>%
+  dyOptions(colors=RColorBrewer::brewer.pal(3,"Set2")) %>%
+  dyAxis("y", label = " in Thousands")%>%
+  dySeries("..1", label = "2013") %>%
+  dySeries("..2", label = "2014") %>%
+  dySeries("..3", label = "2015") %>%
+  dySeries("..4", label = "2016") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE)%>%
+   dyAxis("x", label = "Month")
+
+Inf_12m_2013<- ts(monthly$Inf_12m_2013, start=c(1),end=c(12), frequency=1)
+Inf_12m_2013<- as.xts(Inf_12m_2013)
+Inf_12m_2014<- ts(monthly$Inf_12m_2014, start=c(1),end=c(12), frequency=1)
+Inf_12m_2014<- as.xts(Inf_12m_2014)
+Inf_12m_2015<- ts(monthly$Inf_12m_2015, start=c(1),end=c(12), frequency=1)
+Inf_12m_2015<- as.xts(Inf_12m_2015)
+Inf_12m_2016<- ts(monthly$Inf_12m_2016, start=c(1),end=c(12), frequency=1)
+Inf_12m_2016<- as.xts(Inf_12m_2016)
+Inf_12m_month <- cbind(Inf_12m_2013, Inf_12m_2014, Inf_12m_2015, Inf_12m_2016)
+plot1.4 <- dygraph(Inf_12m_month, main="Chart 1.4: 12-month inflation")%>%
+  dyOptions(colors=RColorBrewer::brewer.pal(3,"Set2")) %>%
+  dyAxis("y", label = " in Thousands")%>%
+  dySeries("..1", label = "2013") %>%
+  dySeries("..2", label = "2014") %>%
+  dySeries("..3", label = "2015") %>%
+  dySeries("..4", label = "2016") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE)%>%
+   dyAxis("x", label = "Month")
+
+```
+
+```{r, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
+#quarterly
+ggplot2.1=ggplot(quarterly, aes(x=Quarter, y=Tourism.receipts, colour=Year,shape=Year))+ geom_line() + geom_point(size=3) + scale_x_continuous(breaks = pretty_breaks(n = 4))+labs(y="In Afl. million")+ ggtitle("Chart 2.1: Tourism Receipts")+theme_economist()
+
+receipts_2013<- ts(quarterly$receipts_2013, start=c(1),end=c(4), frequency=1)
+receipts_2013<- as.xts(receipts_2013)
+receipts_2014<- ts(quarterly$receipts_2014, start=c(1),end=c(4), frequency=1)
+receipts_2014<- as.xts(receipts_2014)
+receipts_2015<- ts(quarterly$receipts_2015, start=c(1),end=c(4), frequency=1)
+receipts_2015<- as.xts(receipts_2015)
+receipts_2016<- ts(quarterly$receipts_2016, start=c(1),end=c(4), frequency=1)
+receipts_2016<- as.xts(receipts_2016)
+receipts_month <- cbind(receipts_2013, receipts_2014, receipts_2015, receipts_2016)
+plot2.1 <- dygraph(receipts_month, main="Chart 3.1: Tourism receipts")%>%
+  dyOptions(colors=RColorBrewer::brewer.pal(3,"Set2")) %>%
+  dyAxis("y", label = "Visitors in Thousands")%>%
+  dySeries("..1", label = "2013") %>%
+  dySeries("..2", label = "2014") %>%
+  dySeries("..3", label = "2015") %>%
+  dySeries("..4", label = "2016") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE)%>%
+   dyAxis("x", label = "Month")
+
+
+
+```
+
+```{r, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
+# Yearly
+GDP<- ts(yearly$Real.GDP, start=c(1992,1),end=c(2016,1), frequency=1)
+GDPcapita<-ts(yearly$Real.GDP.per.capita, start=c(1992,1), end=c(2016,1), frequency=1)
+Unemployment<- ts(yearly$Unemployment.rate, start=c(1992,1),end=c(2016,1), frequency=1)
+debtGDP<- ts(yearly$Debt.GDP, start=c(1992,1),end=c(2016,1), frequency=1)
+GDP<-as.xts(GDP)
+GDPcapita<-as.xts(GDPcapita)
+Unemployment<-as.xts(Unemployment)
+debtGDP<-as.xts(debtGDP)
+
+```
+
+
+```{r normal_plot, fig.width=4.5, fig.height=3, echo=FALSE, message=FALSE, warning=FALSE}
+plot1.1
+plot1.2
+plot1.3
+plot1.4 
+```
+
+***
+##Quarterly Indicators
+```{r, fig.width=4.5, fig.height=3, echo=FALSE, message=FALSE, warning=FALSE}
+plot2.1
+```
+
+
+***
+##Yearly Indicators
+```{r, fig.width=4.5, fig.height=3, echo=FALSE, message=FALSE, warning=FALSE}
+dygraph(GDP, main = "Chart 3.1: Real Gross Domestic Product growth (GDP)", ylab = "Growth in percentage")%>%
+  dyOptions(drawPoints = TRUE, pointSize = 2, axisTickSize = 1, colors = RColorBrewer::brewer.pal(3, "Set2")) %>% 
+  dySeries("V1", label = "Real GDP growth") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE) %>% 
+  dyShading(from = "2015-01-01", to = "2016-12-12", color = "#CCEBD6")%>% 
+  dyRangeSelector(dateWindow = c("1996-01-01", "2017-01-01"))
+
+dygraph(GDPcapita, main = "Chart 3.2: GDP per capita", ylab = "in Afl. million")%>%
+  dyOptions(drawPoints = TRUE, pointSize = 2, axisTickSize = 1, colors = RColorBrewer::brewer.pal(3, "Set2")) %>% 
+  dySeries("V1", label = "GDP per capita") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE) %>% 
+  dyShading(from = "2015-01-01", to = "2016-12-12", color = "#CCEBD6")%>% 
+  dyRangeSelector(dateWindow = c("1996-01-01", "2017-01-01"))
+
+dygraph(Unemployment, main = "Chart 3.3: Unemployment rate", ylab = "Growth in percentage")%>%
+  dyOptions(drawPoints = TRUE, pointSize = 2, axisTickSize = 1, colors = RColorBrewer::brewer.pal(3, "Set2")) %>% 
+  dySeries("V1", label = "Unemployment rate") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE) %>% 
+  dyShading(from = "2015-01-01", to = "2016-12-12", color = "#CCEBD6")%>% 
+  dyRangeSelector(dateWindow = c("1996-01-01", "2017-01-01"))
+
+dygraph(debtGDP, main = "Chart 3.4: Debt to GDP ratio", ylab = "Growth in percentage")%>%
+  dyOptions(drawPoints = TRUE, pointSize = 2, axisTickSize = 1, colors = RColorBrewer::brewer.pal(3, "Set2")) %>% 
+  dySeries("V1", label = "Debt to GDP ratio") %>%
+  dyLegend(show = "always", hideOnMouseOut = FALSE) %>% 
+  dyShading(from = "2015-01-01", to = "2016-12-12", color = "#CCEBD6")%>% 
+  dyRangeSelector(dateWindow = c("1996-01-01", "2017-01-01"))
+
+```
+
+Sources (in Alphabetical order): Aruba Port Authority N.V., Aruba Tourism Authority N.V., Centrale Bank van Aruba, Centraal Bureau voor de Statistieken
+
+
+
